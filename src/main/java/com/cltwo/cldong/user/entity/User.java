@@ -40,7 +40,8 @@ public class User {
     @CreationTimestamp
     private LocalDateTime regDate;
 
-    @Column(columnDefinition = "varchar(15) default 'USER'")
-    private String rol;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
 }
