@@ -69,7 +69,9 @@ public class UserDTO implements UserDetails {
                 .password(password)
                 .nickname(nickname)
                 .email(email)
-                .role(Role.ROLE_USER)
+//                .role(Role.USER)
+                .role(Role.MEMBER)
+//                .role(Role.ADMIN)
                 .build();
         return user;
     };

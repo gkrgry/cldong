@@ -40,8 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/login/all").permitAll()
-                .antMatchers("/login/member").authenticated()
-                .antMatchers("/login/admin").authenticated();
+                .antMatchers("/login/member").hasAnyRole("MEMBER")
+                .antMatchers("/login/admin").hasAnyRole("ADMIN");
         http.formLogin();//인가,인증 문제시 로그인 화면
 
         http.logout()
