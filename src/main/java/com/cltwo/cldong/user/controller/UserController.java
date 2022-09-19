@@ -12,33 +12,38 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequiredArgsConstructor
 @Log4j2
-@RequestMapping("/login")
+@RequestMapping("/")
 public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/all")
-    public void all(){
+//    @GetMapping("/all")
+//    public void all(){
+//
+//    }
+//
+//    @PreAuthorize("hasRole('MEMBER')")
+//    @GetMapping("/member")
+//    public void member(){
+//
+//    }
+//
+//    @PreAuthorize("hasRole('ADMIN')")
+//    @GetMapping("/admin")
+//    public void admin(){
+//
+//    }
 
+    @GetMapping("/login")
+    public String login(){
+            log.info("login");
+        return "login";
     }
 
-    @PreAuthorize("hasRole('MEMBER')")
-    @GetMapping("/member")
-    public void member(){
-
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/admin")
-    public void admin(){
-
-    }
     @GetMapping("/join")
     public void join(){
 
     }
-
-    @ResponseBody
     @PostMapping("/join")
     public String joinP(UserDTO userDTO){
 
@@ -46,7 +51,7 @@ public class UserController {
         log.info("아이디 생성" + userDTO.getRole());
 
 
-        return "redirect:/login/join";
+        return "redirect:/";
 
     }
 

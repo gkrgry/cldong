@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @RequiredArgsConstructor
@@ -39,14 +40,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login/all").permitAll()
-                .antMatchers("/login/member").hasAnyRole("MEMBER")
-                .antMatchers("/login/admin").hasAnyRole("ADMIN");
-        http.formLogin();//인가,인증 문제시 로그인 화면
-
+                .antMatchers("/all").permitAll()
+                .antMatchers("/member").hasAnyRole("MEMBER")
+                .antMatchers("/admin").hasAnyRole("ADMIN");
+        http.formLogin()
+                .loginPage("/login").failureUrl("/error").permitAll().defaultSuccessUrl("/");//인가,인증 문제시 로그인 화면
+        http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());//csrf 설정
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/")
                 .invalidateHttpSession(true);
 
         http.exceptionHandling()

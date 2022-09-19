@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>ClDong</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/login/css/style.css">
+
+</head>
+<body>
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+                <h2 class="heading-section">ClDong</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="login-wrap p-4 p-md-5">
+                    <div class="icon d-flex align-items-center justify-content-center">
+                        <span class="fa fa-user-o"></span>
+                    </div>
+                    <h3 class="text-center mb-4">Login</h3>
+                    <form action="login" method="post" class="login-form">
+                        <div class="form-group">
+                            <input type="text" name="username" id="username" class="form-control rounded-left"
+                                   placeholder="Username" required>
+                        </div>
+                        <div class="form-group d-flex">
+                            <input type="password" name="password" id="password" class="form-control rounded-left"
+                                   placeholder="Password" required>
+                        </div>
+                        <input type="hidden" id="csrf" data-token-name="${_csrf.headerName}" value="${_csrf.token}">
+                        <div class="form-group d-md-flex">
+                            <div class="w-50">
+                                <!--	            		<label class="checkbox-wrap checkbox-primary">Remember Me-->
+                                <!--									  <input type="checkbox" checked>-->
+                                <!--									  <span class="checkmark"></span>-->
+                                <!--									</label>-->
+                                <a href="join">Join</a>
+                            </div>
+                            <div class="w-50 text-md-right">
+                                <a href="#">Forgot Password</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button id="login_bt" class="btn btn-primary rounded submit p-3 px-5">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/login/js/jquery.min.js"></script>
+<script src="/login/js/popper.js"></script>
+<script src="/login/js/bootstrap.min.js"></script>
+<script src="/login/js/main.js"></script>
+<script>
+    $(function () {
+        $("#login_bt").click(function () {
+            login();
+        })
+    })
+
+    function login() {
+        $.ajax({
+            url: "/login",
+            type: "POST",
+            dataType: "json",
+            data: {
+                username: $("#username").val(),
+                password: $("#password").val()
+            },
+            beforeSend: function (xhr) {
+                //이거 안하면 403 error
+                //데이터를 전송하기 전에 헤더에 csrf값을 설정한다
+                var csrf = $("#csrf");
+                xhr.setRequestHeader(csrf.data("token-name"), csrf.val());
+            },
+            success: function (response) {
+                if (response.code == "200") {
+                    // 정상 처리 된 경우
+                    window.location = response.item.url;	//이전페이지로 돌아가기
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function (a, b, c) {
+                console.log(a, b, c);
+            }
+
+        })
+
+    }
+</script>
+</body>
+</html>
+
