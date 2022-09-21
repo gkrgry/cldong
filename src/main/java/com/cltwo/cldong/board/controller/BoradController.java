@@ -5,7 +5,12 @@ import com.cltwo.cldong.board.entity.Board;
 import com.cltwo.cldong.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +26,18 @@ public class BoradController {
 
     private final BoardService boardService;
 
-    @GetMapping("/")
-    public String main(){
+    @GetMapping({"/main","/"})
+    public String main(Model model,
+                       @PageableDefault(sort = "bid",direction = Sort.Direction.DESC, size = 12)Pageable pageable){
+        Page<Board> list = boardService.pageList(pageable);
+        model.addAttribute("pageable",list);//내용
+        model.addAttribute("prev",pageable.previousOrFirst().getPageNumber());//이전페이지
+        model.addAttribute("next",pageable.next().getPageNumber());//다음페이지
+        model.addAttribute("hasPrev",list.hasPrevious());//이전페이지가 있냐
+        model.addAttribute("hasNext",list.hasNext());//다음페이지가 있냐
+        model.addAttribute("pageNum",pageable.getPageNumber());
+        model.addAttribute("totalPage",list.getTotalPages());
+
 
         return "main";
     }

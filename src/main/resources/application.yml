@@ -16,7 +16,7 @@ spring:
   jpa: #jpa 설정
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     open-in-view: false
     generate-ddl: true
 
