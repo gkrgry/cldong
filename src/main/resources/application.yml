@@ -20,4 +20,7 @@ spring:
     open-in-view: false
     generate-ddl: true
 
+  profiles:
+    include:
+     - aws #aws.yml 설정
 
