@@ -2,6 +2,7 @@ package com.cltwo.cldong.board.entity;
 
 import com.cltwo.cldong.user.entity.User;
 import com.cltwo.cldong.video.entity.Video;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -20,20 +21,19 @@ public class Board {
 
     @Id
     @Column
-    private String bid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bid;
 //
 //    @ManyToOne
 //    @JoinColumn(name = "uid")
 //    private User user;
     @OneToOne
     @JoinColumn(name = "vid")
+    @JsonIgnore
     private Video vid;
 
     @Column
     private String uid;
-
-//    @Column
-//    private String vid;
 
     @Column
     private String bTitle;

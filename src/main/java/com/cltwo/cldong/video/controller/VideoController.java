@@ -21,38 +21,6 @@ import java.util.UUID;
 @RequestMapping("/video")
 public class VideoController {
 
-    private final VideoService videoService;
-    private final S3Service s3Service;
 
-
-    @PostMapping("/upload")
-    public String videoUpload(MultipartFile videoFile){
-        String id = randomId();
-
-        videoService.videoS3Register(videoFile,id);
-        s3Service.uploadFile(videoFile,id);
-
-        return "success";
-    }
-
-    @PostMapping("/remove")
-    public String videoUpload(String filename){
-        videoService.videoDelete(filename);
-        s3Service.deleteFile(filename);
-
-        return "remove success";
-    }
-
-
-
-
-    public String randomId(){
-        UUID uuid = UUID.randomUUID();
-        LocalDate now = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd");
-        String formatedNow = now.format(formatter);
-        String rId = formatedNow+"_"+uuid.toString();
-        return rId;
-    }
 
 }

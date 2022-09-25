@@ -3,6 +3,10 @@ package com.cltwo.cldong.board.controller;
 import com.cltwo.cldong.board.dto.BoardDTO;
 import com.cltwo.cldong.board.entity.Board;
 import com.cltwo.cldong.board.service.BoardService;
+import com.cltwo.cldong.video.dto.VideoDTO;
+import com.cltwo.cldong.video.entity.Video;
+import com.cltwo.cldong.video.service.S3Service;
+import com.cltwo.cldong.video.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -15,8 +19,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,6 +33,8 @@ import java.security.Principal;
 public class BoradController {
 
     private final BoardService boardService;
+    private final VideoService videoService;
+    private final S3Service s3Service;
 
     @GetMapping({"/main","/"})
     public String main(Model model,
@@ -45,8 +55,14 @@ public class BoradController {
 
     @ResponseBody
     @PostMapping("/register")
-    public String register(BoardDTO boardDTO){
+    public String register(BoardDTO boardDTO, MultipartFile multipartFile){
 
+        String vid = randomId();
+        VideoDTO videoDTO = videoService.videoToEmtity(multipartFile,vid);
+
+
+        videoUpload(multipartFile,vid);
+        boardDTO.setVid(videoDTO.toEntity());
         boardService.bRegister(boardDTO);
 
         log.info(boardDTO);
@@ -69,7 +85,7 @@ public class BoradController {
 
     @ResponseBody
     @PostMapping("/read")
-    public Board read(String bid){
+    public Board read(Long bid){
         log.info(bid);
 
         return boardService.bRead(bid);
@@ -77,10 +93,33 @@ public class BoradController {
 
     @ResponseBody
     @PostMapping("/remove")
-    public String remove(String bid){
-        log.info(bid);
+    public String remove(Long bid){
+        String vid = boardService.bRead(bid).getVid().getVid();
 
         boardService.bRemove(bid);
+        videoDelete(vid);
         return "success";
+    }
+
+    //db, s3 파일 업로드
+    public void videoUpload(MultipartFile videoFile,String vid){
+        videoService.videoS3Register(videoFile,vid);
+        s3Service.uploadFile(videoFile,vid);
+    }
+
+
+    //파일 삭제
+    public void videoDelete(String filename){
+        videoService.videoDelete(filename);
+        s3Service.deleteFile(filename);
+    }
+
+    public String randomId(){
+        UUID uuid = UUID.randomUUID();
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd");
+        String formatedNow = now.format(formatter);
+        String rId = formatedNow+"_"+uuid.toString();
+        return rId;
     }
 }

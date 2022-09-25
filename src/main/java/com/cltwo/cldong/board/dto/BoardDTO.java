@@ -16,13 +16,12 @@ import java.time.LocalDateTime;
 @Builder
 public class BoardDTO {
 
-    private String bid;
+    private Long bid;
 
 //    private User user;
     private Video vid;
 
     private String uid;
-//    private String vid;
 
     private String bTitle;
 
@@ -30,9 +29,8 @@ public class BoardDTO {
 
 
     public Board toEntity(){
-        Board board = Board.builder().bid(bid)
+        Board board = Board.builder()
 //                .user(user)
-//                .video(video)
                 .uid(uid)
                 .vid(vid)
                 .bTitle(bTitle)

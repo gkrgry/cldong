@@ -21,6 +21,13 @@ public class VideoService {
 
     //동영상 파일 저장
     public String videoS3Register(MultipartFile videoFile,String fileName){
+        VideoDTO dto = videoToEmtity(videoFile,fileName);
+
+        return videoRepository.save(dto.toEntity()).getVid();
+    }
+
+    //동영상 파일 객체 변환
+    public VideoDTO videoToEmtity(MultipartFile videoFile,String fileName){
         String orgn = videoFile.getOriginalFilename();
         double size = videoFile.getSize();
 
@@ -31,7 +38,7 @@ public class VideoService {
         videoDTO.setVid(fileName);
         videoDTO.setOrgn(orgn);
         videoDTO.setSize(String.format("%.2f",size));
-        return videoRepository.save(videoDTO.toEntity()).getVid();
+        return videoDTO;
     }
 
     public void videoDelete(String fileName){

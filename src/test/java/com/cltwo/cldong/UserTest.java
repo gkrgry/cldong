@@ -1,5 +1,7 @@
 package com.cltwo.cldong;
 
+import com.cltwo.cldong.board.entity.Board;
+import com.cltwo.cldong.board.repository.BoardRepository;
 import com.cltwo.cldong.user.entity.User;
 import com.cltwo.cldong.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,9 @@ public class UserTest {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    BoardRepository boardRepository;
+
     @Test
     public void testUser(){
         System.out.println(userRepository.getClass().getName());
@@ -28,6 +33,8 @@ public class UserTest {
             userRepository.save(user);
         });
     }
+
+
 
     @Test
     public void testUserR(){
