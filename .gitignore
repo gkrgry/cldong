@@ -27,7 +27,7 @@ out/
 !**/src/test/**/out/
 
 ### aws application.yml ###
-application.-aws.yml
+application-aws.properties
 
 ### NetBeans ###
 /nbproject/private/

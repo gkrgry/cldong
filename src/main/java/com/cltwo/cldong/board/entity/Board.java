@@ -25,15 +25,15 @@ public class Board {
 //    @ManyToOne
 //    @JoinColumn(name = "uid")
 //    private User user;
-//    @OneToOne
-//    @JoinColumn(name = "vid")
-//    private Video video;
+    @OneToOne
+    @JoinColumn(name = "vid")
+    private Video vid;
 
     @Column
     private String uid;
 
-    @Column
-    private String vid;
+//    @Column
+//    private String vid;
 
     @Column
     private String bTitle;

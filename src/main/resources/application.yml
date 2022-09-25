@@ -21,6 +21,4 @@ spring:
     generate-ddl: true
 
   profiles:
-    include:
-     - aws #aws.yml 설정
-
+    include: "aws"

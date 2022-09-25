@@ -1,12 +1,10 @@
 package com.cltwo.cldong.video.entity;
 
+import com.cltwo.cldong.board.entity.Board;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,16 +24,10 @@ public class Video {
     private String orgn;
 
     @Column
-    private String name;
-
-    @Column
-    private String vol;
-
-    @Column
-    private String tag;
-
-    @Column
     private String size;
+
+    @OneToOne(mappedBy = "vid")//매핑할 변수랑 이름을 똑같이
+    private Board board;
 
     @Column
     @CreationTimestamp

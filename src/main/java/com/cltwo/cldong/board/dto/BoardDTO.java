@@ -19,10 +19,10 @@ public class BoardDTO {
     private String bid;
 
 //    private User user;
-//    private Video video;
+    private Video vid;
 
     private String uid;
-    private String vid;
+//    private String vid;
 
     private String bTitle;
 
