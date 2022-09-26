@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -75,4 +76,5 @@ public class UserDTO implements UserDetails {
                 .build();
         return user;
     };
+
 }
