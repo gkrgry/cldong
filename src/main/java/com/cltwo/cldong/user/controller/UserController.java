@@ -38,8 +38,10 @@ public class UserController {
 //    }
 
     @GetMapping("/login")
-    public String login(){
-            log.info("login");
+    public String login(Principal principal) throws Exception{
+        if(principal != null){
+            return "redirect:/";
+        }
         return "login";
     }
 
@@ -47,6 +49,7 @@ public class UserController {
     public void join(){
 
     }
+
     @PostMapping("/join")
     public String joinP(UserDTO userDTO){
 
