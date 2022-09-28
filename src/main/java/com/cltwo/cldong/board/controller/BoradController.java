@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.Session;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -38,7 +41,9 @@ public class BoradController {
 
     @GetMapping({"/main","/"})
     public String main(Model model,
-                       @PageableDefault(sort = "bid",direction = Sort.Direction.DESC, size = 12)Pageable pageable){
+                       @PageableDefault(sort = "bid",direction = Sort.Direction.DESC, size = 12)Pageable pageable,
+                       Principal principal,
+                       HttpServletRequest request) throws Exception{
         Page<Board> list = boardService.pageList(pageable);
         model.addAttribute("pageable",list);//내용
         model.addAttribute("prev",pageable.previousOrFirst().getPageNumber());//이전페이지
@@ -48,6 +53,11 @@ public class BoradController {
         model.addAttribute("pageNum",pageable.getPageNumber());
         model.addAttribute("totalPage",list.getTotalPages());
 
+        if(principal != null){
+            HttpSession session = request.getSession();
+            session.setAttribute("login",principal.getName());
+            log.info(principal.getName());
+        }
 
         return "main";
     }
@@ -99,6 +109,13 @@ public class BoradController {
         boardService.bRemove(bid);
         videoDelete(vid);
         return "success";
+    }
+
+    @GetMapping("/video")
+    public String video(String vid,Model model){
+        model.addAttribute("vid",vid);
+
+        return "video";
     }
 
     //db, s3 파일 업로드
