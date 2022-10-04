@@ -12,6 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/main/css/styles.css" rel="stylesheet" />
+    <link href="/main/css/replyStyle.css" rel="stylesheet" />
 </head>
 <body>
 <!-- Navigation-->
@@ -24,18 +25,135 @@
             </video>
     </div>
 </div>
-<!-- Section-->
-<section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
+<br>
+<br>
+<!-- 개인 메세지 -->
+<br>
+<br>
+<!-- reply -->
+<div class="container bootstrap snippets bootdey">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="blog-comment">
+                <section>
+                <h3 class="text-success" style="display: inline">Comments</h3>
+                <i class="pull-right" style="float: right"><a href="#">Reply</a></i>
+                </section>
+                <hr/>
+                <ul class="comments">
+                    <div id="replys">
+<!--                    <li  class="clearfix">-->
+<!--                        <img src="./blank_profile.png" class="avatar" alt="">-->
+<!--                        <div class="post-comments">-->
+<!--                            <p class="meta" id="replyRegDate">Dec 18, 2014 </p><p class="meta" id="replyUserId">JohnDoe</p>&lt;!&ndash; says : <i class="pull-right"><a href="#"><small>Reply</small></a></i></p>&ndash;&gt;-->
+<!--                            <p id="replyContent">-->
+<!--                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.-->
+<!--                                Etiam a sapien odio, sit amet-->
+<!--                            </p>-->
+<!--                        </div>-->
+<!--                    </li>-->
+                    </div>
+                    <!-- paging -->
 
-
+<!--                <li        구현 목표-->
+<!--                        <ul class="comments">
+                            <li class="clearfix">
+                                <img src="https://bootdey.com/img/Content/user_3.jpg" class="avatar" alt="">
+                                <div class="post-comments">
+                                    <p class="meta">Dec 20, 2014 <a href="#">JohnDoe</a> says : <i class="pull-right"><a href="#"><small>Reply</small></a></i></p>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                        Etiam a sapien odio, sit amet
+                                    </p>
+                                </div>
+                            </li>
+                      </ul>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
     </div>
-</section>
+</div>
+<ul id="pagingul">
+</ul>
 <!-- Footer-->
 <div th:include="footer"></div>
+<script src="/login/js/jquery.min.js"></script>
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
-<script src="/mainjs/scripts.js"></script>
+<script src="/main/js/scripts.js"></script>
+<script th:inline="javascript">
+    let totalData; //총 데이터 수
+    let pageCount = 10; //페이징에 나타낼 페이지 수
+    let replyData;      //댓글 데이터
+    let replyHtml = '';
+
+    $(document).ready(function () {
+
+
+        $.ajax({
+            url: "../reply/read",
+            type: "GET",
+            dataType: "json",
+            data: {
+                bid: 1,
+                // password: $("#password").val()
+            },
+            // beforeSend: function (xhr) {
+            //     //이거 안하면 403 error
+            //     //데이터를 전송하기 전에 헤더에 csrf값을 설정한다
+            //     var csrf = $("#csrf");
+            //     xhr.setRequestHeader(csrf.data("token-name"), csrf.val());
+            // },
+            success: function (response) {
+                replyData = response;
+                totalData = response.totalElements;
+                console.log(totalData);
+                console.log("test");
+                console.log(response);
+                $("#replyRegDate").text();
+
+                for(let i=0; i<replyData.content.length; i++) {
+                    replyHtml = replyHtml + "<li class='clearfix'> " +
+                        "<img src='./blank_profile.png' class='avatar'> " +
+                        "<div class='post-comments'>" +
+                        "<p class='meta' id='replyRegDate'>" +
+                        DataFormat(replyData.content[i].regDate) +
+                        "</p><p class='meta' id='replyUserId'>"
+                    + replyData.content[i].uid + "</p>" +
+                        "<p id='replyContent'>" +
+                    replyData.content[i].content +
+                        "</p>" +
+                        "</div> " +
+                        "</li>";
+                }
+                $("#replys").append(replyHtml);
+
+            },
+            error: function (a, b, c) {
+                console.log(a, b, c);
+            }
+
+        })
+
+
+        $("#replyContent").after(replyData.content[0].content);
+        console.log(replyData.content[0].content);
+
+        //글 목록 표시 호출 (테이블 생성)
+        displayData(1, dataPerPage);
+
+        //페이징 표시 호출
+        paging(totalData, dataPerPage, pageCount, 1);
+    });
+
+    function DataFormat(data){
+        let yyyy = data.substring(0,10);
+        return yyyy;
+    };
+
+
+</script>
 </body>
 </html>
