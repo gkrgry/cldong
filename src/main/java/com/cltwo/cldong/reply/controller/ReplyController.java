@@ -24,7 +24,7 @@ public class ReplyController {
 
     @ResponseBody
     @PostMapping("/insert")
-    public String insertReply(ReplyDTO replyDTO, Principal principal) throws Exception{
+    public String insertReply(ReplyDTO replyDTO, Principal principal) throws Exception {
 
 //        replyDTO.setUid(principal.getName());
         Reply reply = replyDTO.toEntity();
@@ -37,8 +37,8 @@ public class ReplyController {
     @GetMapping("/read")
     public Page<Reply> insertReply(Model model,
                                    Long bid,
-                                   @PageableDefault(sort = "regDate",direction = Sort.Direction.DESC, size = 10) Pageable pageable) throws Exception{
-        Page<Reply> replyPage = replyService.pageReply(pageable,bid);
+                                   @PageableDefault(sort = "regDate", direction = Sort.Direction.DESC, size = 10) Pageable pageable) throws Exception {
+        Page<Reply> replyPage = replyService.pageReply(pageable, bid);
 
 
         return replyPage;
@@ -46,8 +46,8 @@ public class ReplyController {
 
     @ResponseBody
     @DeleteMapping("/remove")
-    public String deleteReply(Long rid) throws Exception{
-        if(true){
+    public String deleteReply(Long rid) throws Exception {
+        if (true) {
             replyService.ReplyRemove(rid);
             return "success reply remove";
         }

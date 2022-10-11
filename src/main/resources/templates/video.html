@@ -17,12 +17,19 @@
 <body>
 <!-- Navigation-->
 <div th:include="nav"></div>
+<input type="hidden" id="bid" th:value="${bid}">
+<input type="hidden" id="page" th:value="${page}">
 <!-- video-->
 <div>
-    <div class="ratio ratio-16x9 border bg-black">
-            <video controls>
-                <source th:src="|https://s3.ap-northeast-2.amazonaws.com/gkrgry-test/cldong/${vid}|">
-            </video>
+<!--    <div class="ratio ratio-16x9 border bg-black">-->
+
+<!--    </div>-->
+    <div class="embed-responsive embed-responsive-16by9 bg-black" style="
+    display: flex;
+    justify-content: space-around;">
+        <video class="embed-responsive-item"  controls>
+            <source th:src="|https://s3.ap-northeast-2.amazonaws.com/gkrgry-test/cldong/${vid}|">
+        </video>
     </div>
 </div>
 <br>
@@ -54,7 +61,12 @@
 <!--                    </li>-->
                     </div>
                     <!-- paging -->
-
+                    <div>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center" id="replyPage">
+                            </ul>
+                        </nav>
+                    </div>
 <!--                <li        구현 목표-->
 <!--                        <ul class="comments">
                             <li class="clearfix">
@@ -88,16 +100,16 @@
     let pageCount = 10; //페이징에 나타낼 페이지 수
     let replyData;      //댓글 데이터
     let replyHtml = '';
+    let replyPageHtml = '';
 
-    $(document).ready(function () {
-
-
+    function replyRead(page){
+        console.log(page);
         $.ajax({
-            url: "../reply/read",
+            url: "../reply/read?page="+page,
             type: "GET",
             dataType: "json",
             data: {
-                bid: 1,
+                bid: $("#bid").val()
                 // password: $("#password").val()
             },
             // beforeSend: function (xhr) {
@@ -108,27 +120,10 @@
             // },
             success: function (response) {
                 replyData = response;
-                totalData = response.totalElements;
-                console.log(totalData);
-                console.log("test");
-                console.log(response);
-                $("#replyRegDate").text();
-
-                for(let i=0; i<replyData.content.length; i++) {
-                    replyHtml = replyHtml + "<li class='clearfix'> " +
-                        "<img src='./blank_profile.png' class='avatar'> " +
-                        "<div class='post-comments'>" +
-                        "<p class='meta' id='replyRegDate'>" +
-                        DataFormat(replyData.content[i].regDate) +
-                        "</p><p class='meta' id='replyUserId'>"
-                    + replyData.content[i].uid + "</p>" +
-                        "<p id='replyContent'>" +
-                    replyData.content[i].content +
-                        "</p>" +
-                        "</div> " +
-                        "</li>";
-                }
-                $("#replys").append(replyHtml);
+                console.log(replyData)
+                replyHtmlF(replyData);
+                replyPage(replyData);
+                replyData = "";
 
             },
             error: function (a, b, c) {
@@ -137,15 +132,47 @@
 
         })
 
+        function replyHtmlF(data){
+            for(let i=0; i<data.content.length; i++) {
+                replyHtml = replyHtml + "<li class='clearfix'> " +
+                    "<img src='./blank_profile.png' class='avatar'> " +
+                    "<div class='post-comments'>" +
+                    "<p class='meta' id='replyRegDate'>" +
+                    DataFormat(data.content[i].regDate) +
+                    "</p><p class='meta' id='replyUserId'>"
+                    + data.content[i].uid + "</p>" +
+                    "<p id='replyContent'>" +
+                    data.content[i].content +
+                    "</p>" +
+                    "</div> " +
+                    "</li>";
+            }
+            $("#replys").html(replyHtml);
+            replyHtml="";
+        }
+
+        function replyPage(data){
+            replyPageHtml = replyPageHtml + "<li class='page-item'><a class='page-link' href='/prev'>Prev</a></li>"
+            for(let i=0; i<data.totalPages; i++) {
+                replyPageHtml = replyPageHtml + "<li class='page-item'><button class='page-link' onclick='replyRead("+i+")'>" + (i+1) + "</button></li>";
+            }
+            replyPageHtml = replyPageHtml + "<li class='page-item'><a class='page-link' href='./next'>Next</a></li>"
+
+            $("#replyPage").html(replyPageHtml);
+            replyPageHtml = "";
+        }
+    }
+
+    $(document).ready(function () {
+
+        replyRead(1);
+
+
 
         $("#replyContent").after(replyData.content[0].content);
         console.log(replyData.content[0].content);
 
-        //글 목록 표시 호출 (테이블 생성)
-        displayData(1, dataPerPage);
 
-        //페이징 표시 호출
-        paging(totalData, dataPerPage, pageCount, 1);
     });
 
     function DataFormat(data){
