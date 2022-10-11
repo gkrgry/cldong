@@ -15,10 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.Session;
@@ -112,8 +109,9 @@ public class BoradController {
     }
 
     @GetMapping("/video")
-    public String video(String vid,Model model){
+    public String video(String vid,Long bid,Model model){
         model.addAttribute("vid",vid);
+        model.addAttribute("bid",bid);
 
         return "video";
     }

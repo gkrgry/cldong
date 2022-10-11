@@ -19,9 +19,15 @@
 <!-- Header-->
 <header class="py-5" style="background-color: #8d448b">
     <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Shop in style</h1>
-            <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+        <div class="search-box text-center">
+            <form action="search" class="row g-4 align-content-center" method="post">
+                <div class="col-10">
+                    <input class="form-control" type="text" placeholder="search">
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-light" type="submit">찾기</button>
+                </div>
+            </form>
         </div>
     </div>
 </header>
@@ -31,7 +37,7 @@
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <div th:each="pageList : ${pageable}">
                 <div class="col mb-5" >
-                    <div class="card h-100" th:onclick="|location.href='@{video(vid=${pageList.vid.getVid})}'|">
+                    <div class="card h-100" th:onclick="|location.href='@{video(vid=${pageList.vid.getVid})}&bid=${pageList.bid}'|">
                         <!-- Product image-->
                         <div class="ratio ratio-16x9 border-bottom bg-black">
                             <video class="card-img">
@@ -60,11 +66,11 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item" th:if="${hasPrev}"><a class="page-link" th:href="|/main?page=${prev}|">Prev</a></li>
-<!--                    <span th:each="page : ${#number.sequence(0, totalPage -1)}">-->
-<!--                        <li class="page-item">-->
-<!--                            <a class="page-link" th:href="|/main?page=${pageNum.index}|" th:text="${pageNum.index + 1}"></a>-->
-<!--                        </li>-->
-<!--                    </span>-->
+                    <th:block th:each="page : ${#numbers.sequence(0,totalPage)}">
+                        <li class="page-item">
+                            <a class="page-link" th:href="|/main?page=${page}|" th:text="${page + 1}"></a>
+                        </li>
+                    </th:block>
                     <li class="page-item" th:if="${hasNext}"><a class="page-link" th:href="|/main?page=${next}|">Next</a></li>
                 </ul>
             </nav>
