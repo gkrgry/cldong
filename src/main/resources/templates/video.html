@@ -44,7 +44,7 @@
             <div class="blog-comment">
                 <section>
                 <h3 class="text-success" style="display: inline">Comments</h3>
-                <i class="pull-right" style="float: right"><a href="#">Reply</a></i>
+                <i class="pull-right" style="float: right"><a href="#" data-bs-toggle="modal" data-bs-target="#myModal" id="replyInsert">Reply</a></i>
                 </section>
                 <hr/>
                 <ul class="comments">
@@ -86,8 +86,23 @@
         </div>
     </div>
 </div>
-<ul id="pagingul">
-</ul>
+<div class="modal" id="myModal"tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reply</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="myInput" id="myInput">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" onclick="btReplyInsert()" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Footer-->
 <div th:include="footer"></div>
 <script src="/login/js/jquery.min.js"></script>
@@ -96,14 +111,46 @@
 <!-- Core theme JS-->
 <script src="/main/js/scripts.js"></script>
 <script th:inline="javascript">
-    let totalData; //총 데이터 수
-    let pageCount = 10; //페이징에 나타낼 페이지 수
     let replyData;      //댓글 데이터
     let replyHtml = '';
     let replyPageHtml = '';
 
+    function btReplyInsert(){
+        $.ajax({
+            url: "/reply/insert",
+            type: "post",
+            data: {
+                bid: $("#bid").val(),
+                content: $("#myInput").val()
+                // password: $("#password").val()
+            },
+            // beforeSend: function (xhr) {
+            //     //이거 안하면 403 error
+            //     //데이터를 전송하기 전에 헤더에 csrf값을 설정한다
+            //     var csrf = $("#csrf");
+            //     xhr.setRequestHeader(csrf.data("token-name"), csrf.val());
+            // },
+            success: function (response) {
+
+                replyRead(0);
+
+
+
+            },
+            error: function (a, b, c) {
+                console.log(a, b, c);
+            }
+
+        })
+    }
+
+    let myInput = document.getElementById('myInput')
+    let myModal = document.getElementById('myModal')
+
+    myModal.addEventListener('shown.bs.modal', function () {
+        myInput.focus()
+    })
     function replyRead(page){
-        console.log(page);
         $.ajax({
             url: "../reply/read?page="+page,
             type: "GET",
@@ -120,7 +167,6 @@
             // },
             success: function (response) {
                 replyData = response;
-                console.log(replyData)
                 replyHtmlF(replyData);
                 replyPage(replyData);
                 replyData = "";
@@ -165,12 +211,7 @@
 
     $(document).ready(function () {
 
-        replyRead(1);
-
-
-
-        $("#replyContent").after(replyData.content[0].content);
-        console.log(replyData.content[0].content);
+        replyRead(0);
 
 
     });

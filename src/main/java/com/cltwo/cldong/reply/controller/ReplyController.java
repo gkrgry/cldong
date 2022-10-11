@@ -24,13 +24,13 @@ public class ReplyController {
 
     @ResponseBody
     @PostMapping("/insert")
-    public String insertReply(ReplyDTO replyDTO, Principal principal) throws Exception {
+    public void insertReply(ReplyDTO replyDTO, Principal principal) throws Exception {
 
-//        replyDTO.setUid(principal.getName());
+        replyDTO.setUid(principal.getName());
+
         Reply reply = replyDTO.toEntity();
-        replyService.ReplyInsert(reply);
 
-        return "success reply insert";
+        replyService.ReplyInsert(reply);
     }
 
     @ResponseBody
