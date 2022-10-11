@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Shop Homepage - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/main/assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/main/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+<!-- Navigation-->
+<div th:include="nav"></div>
+<!-- Header-->
+<!--<header class="py-5" style="background-color: #8d448b">-->
+<!--    <div class="container px-4 px-lg-5 my-5">-->
+<!--        <div class="search-box text-center">-->
+<!--            <form action="search" class="row g-4 align-content-center" method="post">-->
+<!--                <div class="col-10">-->
+<!--                    <input class="form-control" type="text" placeholder="search">-->
+<!--                </div>-->
+<!--                <div class="col-auto">-->
+<!--                    <button class="btn btn-light" type="submit">찾기</button>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</header>-->
+<!-- Section-->
+
+    <div class="row">
+        <div class="col-md-8 order-md-1">
+            <h3 class="mb-3">입력</h3>
+            <form class="needs-validation" id="board" method="post" enctype="multipart/form-data" novalidate>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="bTitle">제목</label>
+                        <input type="text" name="bTitle"
+                               class="form-control" id="bTitle" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            제목을 입력해 주세요
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="bContent">내용</label>
+                        <textarea type="text" name="bContent" rows="8" cols="100"
+                                  class="form-control" id="bContent" required></textarea>
+                        <div class="invalid-feedback">
+                            내용을 입력해 주세요
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="video">video</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                        </div>
+                        <!-- 고칠거-->
+                        <input type="file" id="video" name="uploadfile" multiple>
+                        <!-- class="form-control"-->
+
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-lg btn-block" type="submit"
+                        onclick="register()">등록</button>
+            </form>
+        </div>
+    </div>
+<!-- Footer-->
+<div th:include="footer"></div>
+<script src="/login/js/jquery.min.js"></script>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/main/js/scripts.js"></script>
+<script>
+    function register(){
+    let formData = new FormData($('#board')[0]);
+    console.log(formData);
+        $.ajax({
+            url: "/register",
+            enctype: 'multipart/form-data',
+            type: "post",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function (xhr) {
+                //이거 안하면 403 error
+                //데이터를 전송하기 전에 헤더에 csrf값을 설정한다
+                var csrf = $("#csrf");
+                xhr.setRequestHeader(csrf.data("token-name"), csrf.val());
+            },
+            success: function (response) {
+                console.log("성공입니다");
+
+            },
+            error: function (a, b, c) {
+                console.log(a, b, c);
+            }
+
+        })
+    }
+</script>
+</body>
+</html>

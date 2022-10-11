@@ -60,21 +60,29 @@ public class BoradController {
     }
 
 
+    @GetMapping("/register")
+    public String boardRegister(){
+
+
+        return "board";
+    }
     @ResponseBody
     @PostMapping("/register")
-    public String register(BoardDTO boardDTO, MultipartFile multipartFile){
+    public String register(BoardDTO boardDTO, MultipartFile uploadfile, Principal principal){
 
+        String uid = principal.getName();
         String vid = randomId();
-        VideoDTO videoDTO = videoService.videoToEmtity(multipartFile,vid);
+        VideoDTO videoDTO = videoService.videoToEmtity(uploadfile,vid);
 
 
-        videoUpload(multipartFile,vid);
+        videoUpload(uploadfile,vid);
+        boardDTO.setUid(uid);
         boardDTO.setVid(videoDTO.toEntity());
         boardService.bRegister(boardDTO);
 
         log.info(boardDTO);
 
-        return "success";
+        return "redirect://main";
     }
 
     @ResponseBody
