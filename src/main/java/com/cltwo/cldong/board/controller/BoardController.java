@@ -3,6 +3,8 @@ package com.cltwo.cldong.board.controller;
 import com.cltwo.cldong.board.dto.BoardDTO;
 import com.cltwo.cldong.board.entity.Board;
 import com.cltwo.cldong.board.service.BoardService;
+import com.cltwo.cldong.user.entity.User;
+import com.cltwo.cldong.user.service.UserService;
 import com.cltwo.cldong.video.dto.VideoDTO;
 import com.cltwo.cldong.video.entity.Video;
 import com.cltwo.cldong.video.service.S3Service;
@@ -33,6 +35,7 @@ import java.util.UUID;
 public class BoardController {
 
     private final BoardService boardService;
+    private final UserService userService;
     private final VideoService videoService;
     private final S3Service s3Service;
 
@@ -70,13 +73,14 @@ public class BoardController {
     @PostMapping("/register")
     public String register(BoardDTO boardDTO, MultipartFile uploadfile, Principal principal){
 
-        String uid = principal.getName();
+
+        User user = userService.getUserOne(principal.getName());
         String vid = randomId();
         VideoDTO videoDTO = videoService.videoToEmtity(uploadfile,vid);
 
 
         videoUpload(uploadfile,vid);
-        boardDTO.setUid(uid);
+        boardDTO.setUid(user);
         boardDTO.setVid(videoDTO.toEntity());
         boardService.bRegister(boardDTO);
 

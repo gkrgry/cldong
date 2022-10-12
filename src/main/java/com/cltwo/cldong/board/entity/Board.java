@@ -32,8 +32,9 @@ public class Board {
     @JsonIgnore
     private Video vid;
 
-    @Column
-    private String uid;
+    @ManyToOne(targetEntity = User.class,fetch = FetchType.EAGER)
+    @JoinColumn(name = "uid")
+    private User uid;
 
     @Column
     private String bTitle;

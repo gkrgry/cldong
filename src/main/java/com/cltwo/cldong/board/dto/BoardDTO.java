@@ -21,7 +21,7 @@ public class BoardDTO {
 //    private User user;
     private Video vid;
 
-    private String uid;
+    private User uid;
 
     private String bTitle;
 

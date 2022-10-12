@@ -51,7 +51,7 @@
                                 <!-- Product name-->
                                 <h5 class="fw-bolder" th:text="${pageList.bTitle}"></h5>
                                 <!-- Product price-->
-                                <span th:text="${pageList.uid}"></span>
+                                <span th:text="${pageList.uid.uid}"></span>
                             </div>
                         </div>
 <!--                        &lt;!&ndash; Product actions&ndash;&gt;-->
@@ -85,5 +85,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="/main/js/scripts.js"></script>
+<script th:inline="javascript">
+    console.log([[${pageable}]]);
+</script>
 </body>
 </html>
