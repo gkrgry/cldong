@@ -4,6 +4,8 @@ package com.cltwo.cldong.reply.controller;
 import com.cltwo.cldong.reply.dto.ReplyDTO;
 import com.cltwo.cldong.reply.entity.Reply;
 import com.cltwo.cldong.reply.service.ReplyService;
+import com.cltwo.cldong.user.entity.User;
+import com.cltwo.cldong.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,12 +23,16 @@ import java.security.Principal;
 public class ReplyController {
     private final ReplyService replyService;
 
+    private final UserService userService;
+
 
     @ResponseBody
     @PostMapping("/insert")
     public void insertReply(ReplyDTO replyDTO, Principal principal) throws Exception {
 
-        replyDTO.setUid(principal.getName());
+
+        User user = userService.getUserOne(principal.getName());
+        replyDTO.setUid(user);
 
         Reply reply = replyDTO.toEntity();
 
@@ -39,6 +45,7 @@ public class ReplyController {
                                    Long bid,
                                    @PageableDefault(sort = "regDate", direction = Sort.Direction.DESC, size = 10) Pageable pageable) throws Exception {
         Page<Reply> replyPage = replyService.pageReply(pageable, bid);
+
 
 
         return replyPage;

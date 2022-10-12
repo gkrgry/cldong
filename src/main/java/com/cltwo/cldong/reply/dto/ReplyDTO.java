@@ -1,6 +1,7 @@
 package com.cltwo.cldong.reply.dto;
 
 import com.cltwo.cldong.reply.entity.Reply;
+import com.cltwo.cldong.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +22,7 @@ public class ReplyDTO {
 
     private Long bid;
 
-    private String uid;
+    private User uid;
 
     private String content;
 

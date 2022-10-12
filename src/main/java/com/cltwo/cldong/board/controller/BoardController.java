@@ -30,7 +30,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/")
 @Log4j2
-public class BoradController {
+public class BoardController {
 
     private final BoardService boardService;
     private final VideoService videoService;

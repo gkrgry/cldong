@@ -1,5 +1,9 @@
 package com.cltwo.cldong.reply.entity;
 
+import com.cltwo.cldong.user.entity.User;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,7 +16,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "reply_tb")
 @Getter
-@ToString
 @Builder
 public class Reply {
 
@@ -24,8 +27,9 @@ public class Reply {
     @Column
     private Long bid;
 
-    @Column
-    private String uid;
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "uid")
+    private User uid;
 
     @Column
     private String content;

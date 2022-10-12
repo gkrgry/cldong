@@ -65,13 +65,14 @@
             <div>
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                    <li class="page-item" th:if="${hasPrev}"><a class="page-link" th:href="|/main?page=${prev}|">Prev</a></li>
-                    <th:block th:each="page : ${#numbers.sequence(0,totalPage)}">
+                    <li class="page-item" th:if="${hasPrev}"><a class="page-link" th:href="|/main?page=0|">Prev</a></li>
+                    <th:block th:each="page : ${#numbers.sequence(pageNum<4 ? 0 : pageNum-4
+                    , pageNum>6 ? totalPage-1 : pageNum<totalPage-6 ? pageNum+4 : totalPage-1)}">
                         <li class="page-item">
                             <a class="page-link" th:href="|/main?page=${page}|" th:text="${page + 1}"></a>
                         </li>
                     </th:block>
-                    <li class="page-item" th:if="${hasNext}"><a class="page-link" th:href="|/main?page=${next}|">Next</a></li>
+                    <li class="page-item" th:if="${hasNext}"><a class="page-link" th:href="|/main?page=${totalPage-1}|">Next</a></li>
                 </ul>
             </nav>
             </div>
