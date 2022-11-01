@@ -32,11 +32,13 @@
 <!--    </div>-->
 <!--</header>-->
 <!-- Section-->
-
-    <div class="row">
+<br>
+<br>
+<br>
+    <div class="row d-flex justify-content-center">
         <div class="col-md-8 order-md-1">
             <h3 class="mb-3">입력</h3>
-            <form class="needs-validation" id="board" method="post" enctype="multipart/form-data" novalidate>
+            <form class="needs-validation" id="board" action="/main" enctype="multipart/form-data" novalidate>
                 <div class="row">
                     <div class="col-md-12">
                         <label for="bTitle">제목</label>
@@ -71,6 +73,9 @@
             </form>
         </div>
     </div>
+<br>
+<br>
+<br>
 <!-- Footer-->
 <div th:include="footer"></div>
 <script src="/login/js/jquery.min.js"></script>
@@ -90,14 +95,15 @@
             cache: false,
             contentType: false,
             processData: false,
-            beforeSend: function (xhr) {
-                //이거 안하면 403 error
-                //데이터를 전송하기 전에 헤더에 csrf값을 설정한다
-                var csrf = $("#csrf");
-                xhr.setRequestHeader(csrf.data("token-name"), csrf.val());
-            },
+            async:false,
+            // beforeSend: function (xhr) {
+            //     //이거 안하면 403 error
+            //     //데이터를 전송하기 전에 헤더에 csrf값을 설정한다
+            //     var csrf = $("#csrf");
+            //     xhr.setRequestHeader(csrf.data("token-name"), csrf.val());
+            // },
             success: function (response) {
-                console.log("성공입니다");
+
 
             },
             error: function (a, b, c) {
