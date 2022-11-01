@@ -15,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -69,9 +71,8 @@ public class BoardController {
 
         return "board";
     }
-    @ResponseBody
     @PostMapping("/register")
-    public String register(BoardDTO boardDTO, MultipartFile uploadfile, Principal principal){
+    public String register(BoardDTO boardDTO, MultipartFile uploadfile, Principal principal) throws Exception{
 
 
         User user = userService.getUserOne(principal.getName());
@@ -83,10 +84,9 @@ public class BoardController {
         boardDTO.setUid(user);
         boardDTO.setVid(videoDTO.toEntity());
         boardService.bRegister(boardDTO);
+        log.info("---------------------------------------------test111");
 
-        log.info(boardDTO);
-
-        return "redirect://main";
+        return "redirect:/main";
     }
 
     @ResponseBody
@@ -122,8 +122,12 @@ public class BoardController {
 
     @GetMapping("/video")
     public String video(String vid,Long bid,Model model){
+        Board board = boardService.bRead(bid);
+        model.addAttribute("bid",board.getBid());
+        model.addAttribute("uid",board.getUid().getUid());
+        model.addAttribute("bTitle",board.getBTitle());
+        model.addAttribute("bContent",board.getBContent());
         model.addAttribute("vid",vid);
-        model.addAttribute("bid",bid);
 
         return "video";
     }

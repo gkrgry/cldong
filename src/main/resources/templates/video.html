@@ -33,6 +33,15 @@
     </div>
 </div>
 <br>
+<div class="card text-center">
+    <div class="card-body">
+        <h5 class="card-title" th:text="${bTitle}"></h5>
+        <p class="card-text" th:text="${bContent}"></p>
+    </div>
+    <div class="card-footer text-muted" th:text="${uid}">
+        2 days ago
+    </div>
+</div>
 <br>
 <!-- 개인 메세지 -->
 <br>
@@ -124,12 +133,12 @@
                 content: $("#myInput").val()
                 // password: $("#password").val()
             },
-            beforeSend: function (xhr) {
-                //이거 안하면 403 error
-                //데이터를 전송하기 전에 헤더에 csrf값을 설정한다
-                var csrf = $("#csrf");
-                xhr.setRequestHeader(csrf.data("token-name"), csrf.val());
-            },
+            // beforeSend: function (xhr) {
+            //     //이거 안하면 403 error
+            //     //데이터를 전송하기 전에 헤더에 csrf값을 설정한다
+            //     // var csrf = $("#csrf");
+            //     // xhr.setRequestHeader(csrf.data("token-name"), csrf.val());
+            // },
             success: function (response) {
                 replyRead(0);
             },
@@ -164,7 +173,6 @@
             success: function (response) {
 
                 replyData = response;
-                console.log(replyData)
                 replyHtmlF(replyData);
                 replyPage(replyData);
                 replyData = "";

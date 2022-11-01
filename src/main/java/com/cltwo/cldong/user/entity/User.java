@@ -1,5 +1,6 @@
 package com.cltwo.cldong.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,6 +24,7 @@ public class User {
     @Column(length = 50)
     private String uid;
 
+    @JsonIgnore
     @Column(length = 200, nullable = false)
     private String password;
 

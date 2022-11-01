@@ -15,6 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.net.http.HttpRequest;
 import java.security.Principal;
 
 @Controller
@@ -28,10 +31,10 @@ public class ReplyController {
 
     @ResponseBody
     @PostMapping("/insert")
-    public void insertReply(ReplyDTO replyDTO, Principal principal) throws Exception {
+    public void insertReply(ReplyDTO replyDTO, HttpServletRequest request) throws Exception {
+        HttpSession session = request.getSession();
 
-
-        User user = userService.getUserOne(principal.getName());
+        User user = userService.getUserOne("admin");
         replyDTO.setUid(user);
 
         Reply reply = replyDTO.toEntity();
