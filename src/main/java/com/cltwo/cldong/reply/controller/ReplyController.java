@@ -34,7 +34,7 @@ public class ReplyController {
     public void insertReply(ReplyDTO replyDTO, HttpServletRequest request) throws Exception {
         HttpSession session = request.getSession();
 
-        User user = userService.getUserOne("admin");
+        User user = userService.getUserOne((String)session.getAttribute("login"));
         replyDTO.setUid(user);
 
         Reply reply = replyDTO.toEntity();
