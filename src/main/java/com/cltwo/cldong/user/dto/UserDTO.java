@@ -65,7 +65,7 @@ public class UserDTO implements UserDetails {
 
     //dto -> entity
 
-    public User toEntity(){
+    public User toEntity() {
         User user = User.builder().uid(uid)
                 .password(password)
                 .nickname(nickname)
@@ -75,6 +75,8 @@ public class UserDTO implements UserDetails {
 //                .role(Role.ADMIN)
                 .build();
         return user;
-    };
+    }
+
+    ;
 
 }

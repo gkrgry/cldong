@@ -23,7 +23,7 @@ public class Board {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bid;
-//
+    //
 //    @ManyToOne
 //    @JoinColumn(name = "uid")
 //    private User user;
@@ -32,7 +32,7 @@ public class Board {
     @JsonIgnore
     private Video vid;
 
-    @ManyToOne(targetEntity = User.class,fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "uid")
     private User uid;
 

@@ -18,7 +18,7 @@ public class BoardDTO {
 
     private Long bid;
 
-//    private User user;
+    //    private User user;
     private Video vid;
 
     private User uid;
@@ -28,7 +28,7 @@ public class BoardDTO {
     private String bContent;
 
 
-    public Board toEntity(){
+    public Board toEntity() {
         Board board = Board.builder()
 //                .user(user)
                 .uid(uid)

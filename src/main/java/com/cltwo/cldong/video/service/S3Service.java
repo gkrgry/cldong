@@ -30,33 +30,34 @@ public class S3Service {
     private final AmazonS3 amazonS3;
 
 
-    public void uploadFile(MultipartFile multipartFile,String inputFilename) {
-        String fileName = "cldong/"+inputFilename;
+    public void uploadFile(MultipartFile multipartFile, String inputFilename) {
+        String fileName = "cldong/" + inputFilename;
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(multipartFile.getSize());
         objectMetadata.setContentType(multipartFile.getContentType());
 
-            try(InputStream inputStream = multipartFile.getInputStream()) {
+        try (InputStream inputStream = multipartFile.getInputStream()) {
 
-                amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)//s3에 파일 저장
-                        .withCannedAcl(CannedAccessControlList.PublicRead));
+            amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)//s3에 파일 저장
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
 
-            } catch(IOException e) {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
+        } catch (IOException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
 
 
-        };
+        }
+        ;
 
 
     }
 
     public void deleteFile(String fileName) {
 
-        amazonS3.deleteObject(new DeleteObjectRequest(bucket, "cldong/"+fileName));
+        amazonS3.deleteObject(new DeleteObjectRequest(bucket, "cldong/" + fileName));
     }
 
 
-    public ResponseEntity<byte[]> getObject(String storedFileName) throws IOException{
+    public ResponseEntity<byte[]> getObject(String storedFileName) throws IOException {
         S3Object o = amazonS3.getObject(new GetObjectRequest(bucket, storedFileName)); //버킷을 통해 연결
         S3ObjectInputStream objectInputStream = o.getObjectContent();
         byte[] bytes = IOUtils.toByteArray(objectInputStream);

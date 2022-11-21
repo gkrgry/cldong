@@ -25,11 +25,13 @@ public class UserJoinDTO {
 
     //dto -> entity
 
-    public User toEntity(){
+    public User toEntity() {
         User user = User.builder().uid(uid)
                 .nickname(nickname)
                 .build();
         return user;
-    };
+    }
+
+    ;
 
 }

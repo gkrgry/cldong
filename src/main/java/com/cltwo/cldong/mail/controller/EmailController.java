@@ -22,13 +22,13 @@ public class EmailController {
 
     @ResponseBody
     @PostMapping("/emailConfirm")
-    public ResponseEntity<?> emailConfirm(String email) throws Exception {
+    public ResponseEntity<?> emailConfirm(String floatingInputEmail) throws Exception {
 
-        int overlapCheck = userService.selectEmail(email);
-        if (overlapCheck > 0){
+        int overlapCheck = userService.selectEmail(floatingInputEmail);
+        if (overlapCheck > 0) {
             return ResponseEntity.status(401).body("이미 존재하는 이메일 입니다.");
         }
-        String confirm = emailService.sendSimpleMessage(email);
+        String confirm = emailService.sendSimpleMessage(floatingInputEmail);
 
         log.info(confirm);
 

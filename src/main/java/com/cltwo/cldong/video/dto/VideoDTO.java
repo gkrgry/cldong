@@ -20,7 +20,7 @@ public class VideoDTO {
 
     private String size;
 
-    public Video toEntity(){
+    public Video toEntity() {
         Video video = Video.builder()
                 .vid(vid)
                 .orgn(orgn)

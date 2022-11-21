@@ -24,18 +24,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomUserDetailsService customUserDetailsService;
 
     @Bean
-    public BCryptPasswordEncoder encoder(){//비밀번호 암호화
+    public BCryptPasswordEncoder encoder() {//비밀번호 암호화
         return new BCryptPasswordEncoder();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(customUserDetailsService).passwordEncoder(encoder());
+        auth.userDetailsService(customUserDetailsService).passwordEncoder(encoder());
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**","/js/**","/img/**");
+        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
     }
 
     @Override
@@ -57,7 +57,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement()
                 .maximumSessions(1)
                 .maxSessionsPreventsLogin(true).expiredUrl("/");
-
 
 
         http.csrf().disable();

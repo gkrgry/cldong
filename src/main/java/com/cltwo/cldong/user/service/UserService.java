@@ -26,22 +26,22 @@ public class UserService {
         return userRepository.save(dto.toEntity()).getUid();
     }
 
-    public User getUserOne(String uid){
+    public User getUserOne(String uid) {
         return userRepository.findById(uid).orElseThrow(() -> new NullPointerException("없는 아이디 입니다."));
     }
 
-    public int selectEmail(String email){
+    public int selectEmail(String email) {
         return userRepository.findUserEmailByEmail(email);
     }
 
-    public String modifyUser(String uid, String nickname, String password){
-        if(uid == null || uid.equals("")){
+    public String modifyUser(String uid, String nickname, String password) {
+        if (uid == null || uid.equals("")) {
             return "id 가 비였습니다.";
-        }else if(password == null || password.equals("")) {
+        } else if (password == null || password.equals("")) {
             return "password가 비였습니다.";
-        } else if(nickname == null || nickname.equals("")){
+        } else if (nickname == null || nickname.equals("")) {
             return "nickname이 비였습니다.";
-        }else{
+        } else {
             User user = getUserOne(uid);
             UserDTO userDTO = UserDTO.builder()
                     .uid(user.getUid())

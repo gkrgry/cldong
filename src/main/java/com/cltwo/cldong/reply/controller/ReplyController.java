@@ -34,7 +34,7 @@ public class ReplyController {
     public void insertReply(ReplyDTO replyDTO, HttpServletRequest request) throws Exception {
         HttpSession session = request.getSession();
 
-        User user = userService.getUserOne((String)session.getAttribute("login"));
+        User user = userService.getUserOne((String) session.getAttribute("login"));
         replyDTO.setUid(user);
 
         Reply reply = replyDTO.toEntity();
@@ -48,7 +48,6 @@ public class ReplyController {
                                    Long bid,
                                    @PageableDefault(sort = "regDate", direction = Sort.Direction.DESC, size = 10) Pageable pageable) throws Exception {
         Page<Reply> replyPage = replyService.pageReply(pageable, bid);
-
 
 
         return replyPage;

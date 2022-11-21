@@ -16,15 +16,15 @@ public class ReplyService {
 
     private final ReplyRepository replyRepository;
 
-    public void ReplyInsert(Reply reply){
+    public void ReplyInsert(Reply reply) {
         replyRepository.save(reply);
     }
 
-    public void ReplyRemove(Long rid){
+    public void ReplyRemove(Long rid) {
         replyRepository.deleteById(rid);
     }
 
-    public Page<Reply> pageReply(Pageable pageable, Long bid){
+    public Page<Reply> pageReply(Pageable pageable, Long bid) {
         return replyRepository.findAllByBid(pageable, bid);
     }
 }

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
     <title>Shop Homepage - Start Bootstrap Template</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="/main/assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/main/assets/favicon.ico"/>
     <!-- Bootstrap icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="/main/css/styles.css" rel="stylesheet" />
+    <link href="/main/css/styles.css" rel="stylesheet"/>
 </head>
 <body>
 <!-- Navigation-->
@@ -35,44 +35,45 @@
 <br>
 <br>
 <br>
-    <div class="row d-flex justify-content-center">
-        <div class="col-md-8 order-md-1">
-            <h3 class="mb-3">입력</h3>
-            <form class="needs-validation" id="board" action="/main" enctype="multipart/form-data" novalidate>
-                <div class="row">
-                    <div class="col-md-12">
-                        <label for="bTitle">제목</label>
-                        <input type="text" name="bTitle"
-                               class="form-control" id="bTitle" placeholder="" value="" required>
-                        <div class="invalid-feedback">
-                            제목을 입력해 주세요
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <label for="bContent">내용</label>
-                        <textarea type="text" name="bContent" rows="8" cols="100"
-                                  class="form-control" id="bContent" required></textarea>
-                        <div class="invalid-feedback">
-                            내용을 입력해 주세요
-                        </div>
+<div class="row d-flex justify-content-center">
+    <div class="col-md-8 order-md-1">
+        <h3 class="mb-3">입력</h3>
+        <form class="needs-validation" id="board" action="/main" enctype="multipart/form-data" novalidate>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="bTitle">제목</label>
+                    <input type="text" name="bTitle"
+                           class="form-control" id="bTitle" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        제목을 입력해 주세요
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label for="video">video</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                        </div>
-                        <!-- 고칠거-->
-                        <input type="file" id="video" name="uploadfile" multiple>
-                        <!-- class="form-control"-->
+                <div class="col-md-12">
+                    <label for="bContent">내용</label>
+                    <textarea type="text" name="bContent" rows="8" cols="100"
+                              class="form-control" id="bContent" required></textarea>
+                    <div class="invalid-feedback">
+                        내용을 입력해 주세요
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="video">video</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                    </div>
+                    <!-- 고칠거-->
+                    <input type="file" id="video" name="uploadfile" multiple>
+                    <!-- class="form-control"-->
 
-                    </div>
                 </div>
-                <button class="btn btn-primary btn-lg btn-block" type="submit"
-                        onclick="register()">등록</button>
-            </form>
-        </div>
+            </div>
+            <button class="btn btn-primary btn-lg btn-block" type="submit"
+                    onclick="register()">등록
+            </button>
+        </form>
     </div>
+</div>
 <br>
 <br>
 <br>
@@ -84,9 +85,9 @@
 <!-- Core theme JS-->
 <script src="/main/js/scripts.js"></script>
 <script>
-    function register(){
-    let formData = new FormData($('#board')[0]);
-    console.log(formData);
+    function register() {
+        let formData = new FormData($('#board')[0]);
+        console.log(formData);
         $.ajax({
             url: "/register",
             enctype: 'multipart/form-data',
@@ -95,7 +96,7 @@
             cache: false,
             contentType: false,
             processData: false,
-            async:false,
+            async: false,
             // beforeSend: function (xhr) {
             //     //이거 안하면 403 error
             //     //데이터를 전송하기 전에 헤더에 csrf값을 설정한다

@@ -13,83 +13,104 @@
 
 </head>
 <body>
-<section class="ftco-section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 text-center mb-5">
-                <h2 class="heading-section" style="color: #8d448b">ClDong</h2>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
-                <div class="login-wrap p-4 p-md-5">
-                    <div class="icon d-flex align-items-center justify-content-center">
-                        <span class="fa fa-user-o"></span>
-                    </div>
-                    <h3 class="text-center mb-4">Join</h3>
-                    <div class="form-group">
-                        <button id="emailCheck_bt" class="btn btn-primary rounded  p-2 px-1" onclick="">EmailCheck</button>
-                    </div>
-                    <form class="login-form">
-                        <div class="form-group">
-                            <input type="text" name="uid" class="form-control rounded-left" placeholder="Username" required>
-                        </div>
-                        <div class="form-group d-flex">
-                            <input type="password" name="password" class="form-control rounded-left" placeholder="Password" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="nickname" class="form-control rounded-left" placeholder="Nickname" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="email" class="form-control rounded-left" placeholder="Email" required>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10 col-xl-9 mx-auto">
+            <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
+                <div class="card-img-left d-none d-md-flex">
+                    <!-- Background image for card set in CSS! -->
+                </div>
+                <div class="card-body p-4 p-sm-5">
+                    <h5 class="card-title text-center mb-5 fw-light fs-5">Register</h5>
+                    <form>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInputUsername" placeholder="myusername"
+                                   required autofocus>
+                            <label for="floatingInputUsername">Username</label>
                         </div>
 
-                        <div class="form-group">
-                            <input type="text" name="emailCheckNum" class="form-control rounded-left" placeholder="EmailCheckNum" required>
+                        <hr>
+
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                            <label for="floatingPassword">Password</label>
                         </div>
-                        <div class="form-group">
-                            <button id="join_bt" class="btn btn-primary rounded submit p-3 px-5" disabled>Join</button>
+
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="floatingPasswordConfirm"
+                                   placeholder="Confirm Password">
+                            <label for="floatingPasswordConfirm">Confirm Password</label>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" id="floatingInputEmail"
+                                   placeholder="name@example.com">
+                            <label for="floatingInputEmail">Email address</label>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" id="floatingInputEmailCh" placeholder="emailCheck">
+                            <label for="floatingInputEmail">Email Check</label>
+                        </div>
+                        <button class="btn btn-emailCk btn-primary" type="button" onclick="emailCheck()">emailCheck
+                        </button>
+
+                        <hr>
+
+                        <div class="d-grid mb-2">
+                            <button class="btn btn-lg btn-primary btn-login fw-bold text-uppercase" type="submit">
+                                Register
+                            </button>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="d-grid mb-2">
+                            <button class="btn btn-lg btn-google btn-login fw-bold text-uppercase" type="submit">
+                                <i class="fab fa-google me-2"></i> Sign up with Google
+                            </button>
+                        </div>
+
+                        <div class="d-grid">
+                            <button class="btn btn-lg btn-facebook btn-login fw-bold text-uppercase" type="submit">
+                                <i class="fab fa-facebook-f me-2"></i> Sign up with Facebook
+                            </button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
+</body>
 
 <script src="/login/js/jquery.min.js"></script>
-<script src="/login/js/popper.js"></script>
 <script src="/login/js/bootstrap.min.js"></script>
 <script src="/login/js/main.js"></script>
 <script>
-    $(function () {
-        $("#join_bt").click(function () {
-            join();
-        })
-    })
 
-    function join() {
+    function emailCheck() {
         $.ajax({
-            url: "/join",
+            url: "/emailConfirm",
             type: "POST",
             dataType: "json",
             data: {
-                username: $("#username").val(),
-                password: $("#password").val(),
-                nickname: $("#nickname").val(),
-                email: $("#email").val()
+                email: $("#floatingInputEmail").text()
             },
             beforeSend: function (xhr) {
                 //이거 안하면 403 error
                 //데이터를 전송하기 전에 헤더에 csrf값을 설정한다
-                var csrf = $("#csrf");
-                xhr.setRequestHeader(csrf.data("token-name"), csrf.val());
+                // var csrf = $("#csrf");
+                // xhr.setRequestHeader(csrf.data("token-name"), csrf.val());
             },
             success: function (response) {
                 if (response.code == "200") {
                     // 정상 처리 된 경우
-                    window.location = "/login";	//로그인페이지로
+
                 } else {
                     alert(response.message);
                 }
@@ -99,11 +120,6 @@
             }
 
         })
-
-        let emailCheck = window.prompt("이메일을 확인해 주세요");
-
-
-
     }
 </script>
 </body>

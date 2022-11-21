@@ -20,28 +20,28 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public String bRegister(BoardDTO boardDTO){
+    public String bRegister(BoardDTO boardDTO) {
 
         return boardRepository.save(boardDTO.toEntity()).getBid().toString();
 
     }
 
-    public void bRemove(Long bid){
+    public void bRemove(Long bid) {
         boardRepository.deleteById(bid);
     }
 
 
-    public Board bRead(Long bid){
+    public Board bRead(Long bid) {
         Optional<Board> result = boardRepository.findById(bid);
 
-        if(result.isPresent()){
+        if (result.isPresent()) {
             Board board = result.get();
             return board;
         }
         return null;
     }
 
-    public Page<Board> pageList(Pageable pageable){
+    public Page<Board> pageList(Pageable pageable) {
         return boardRepository.findAll(pageable);
     }
 }

@@ -14,7 +14,7 @@ public class UserSessionDTO implements Serializable {
     private String nickname;
     private Role role;
 
-    public UserSessionDTO(User user){
+    public UserSessionDTO(User user) {
         this.uid = user.getUid();
         this.password = user.getPassword();
         this.email = user.getEmail();

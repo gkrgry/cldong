@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
     <title>Shop Homepage - Start Bootstrap Template</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="/main/assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/main/assets/favicon.ico"/>
     <!-- Bootstrap icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="/main/css/styles.css" rel="stylesheet" />
-    <link href="/main/css/replyStyle.css" rel="stylesheet" />
+    <link href="/main/css/styles.css" rel="stylesheet"/>
+    <link href="/main/css/replyStyle.css" rel="stylesheet"/>
 </head>
 <body>
 <!-- Navigation-->
@@ -21,13 +21,13 @@
 <input type="hidden" id="page" th:value="${page}">
 <!-- video-->
 <div>
-<!--    <div class="ratio ratio-16x9 border bg-black">-->
+    <!--    <div class="ratio ratio-16x9 border bg-black">-->
 
-<!--    </div>-->
+    <!--    </div>-->
     <div class="embed-responsive embed-responsive-16by9 bg-black" style="
     display: flex;
     justify-content: space-around;">
-        <video class="embed-responsive-item"  controls>
+        <video class="embed-responsive-item" controls>
             <source th:src="|https://s3.ap-northeast-2.amazonaws.com/gkrgry-test/cldong/${vid}|">
         </video>
     </div>
@@ -52,22 +52,24 @@
         <div class="col-md-12">
             <div class="blog-comment">
                 <section>
-                <h3 class="text-success" style="display: inline">Comments</h3>
-                <i class="pull-right" style="float: right"><a href="#" data-bs-toggle="modal" data-bs-target="#myModal" id="replyInsert">Reply</a></i>
+                    <h3 class="text-success" style="display: inline">Comments</h3>
+                    <i class="pull-right" style="float: right"><a href="#" data-bs-toggle="modal"
+                                                                  data-bs-target="#myModal"
+                                                                  id="replyInsert">Reply</a></i>
                 </section>
                 <hr/>
                 <ul class="comments">
                     <div id="replys">
-<!--                    <li  class="clearfix">-->
-<!--                        <img src="./blank_profile.png" class="avatar" alt="">-->
-<!--                        <div class="post-comments">-->
-<!--                            <p class="meta" id="replyRegDate">Dec 18, 2014 </p><p class="meta" id="replyUserId">JohnDoe</p>&lt;!&ndash; says : <i class="pull-right"><a href="#"><small>Reply</small></a></i></p>&ndash;&gt;-->
-<!--                            <p id="replyContent">-->
-<!--                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.-->
-<!--                                Etiam a sapien odio, sit amet-->
-<!--                            </p>-->
-<!--                        </div>-->
-<!--                    </li>-->
+                        <!--                    <li  class="clearfix">-->
+                        <!--                        <img src="./blank_profile.png" class="avatar" alt="">-->
+                        <!--                        <div class="post-comments">-->
+                        <!--                            <p class="meta" id="replyRegDate">Dec 18, 2014 </p><p class="meta" id="replyUserId">JohnDoe</p>&lt;!&ndash; says : <i class="pull-right"><a href="#"><small>Reply</small></a></i></p>&ndash;&gt;-->
+                        <!--                            <p id="replyContent">-->
+                        <!--                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.-->
+                        <!--                                Etiam a sapien odio, sit amet-->
+                        <!--                            </p>-->
+                        <!--                        </div>-->
+                        <!--                    </li>-->
                     </div>
                     <!-- paging -->
                     <div>
@@ -76,26 +78,26 @@
                             </ul>
                         </nav>
                     </div>
-<!--                <li        구현 목표-->
-<!--                        <ul class="comments">
-                            <li class="clearfix">
-                                <img src="https://bootdey.com/img/Content/user_3.jpg" class="avatar" alt="">
-                                <div class="post-comments">
-                                    <p class="meta">Dec 20, 2014 <a href="#">JohnDoe</a> says : <i class="pull-right"><a href="#"><small>Reply</small></a></i></p>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                        Etiam a sapien odio, sit amet
-                                    </p>
-                                </div>
-                            </li>
-                      </ul>
-                    </li>-->
+                    <!--                <li        구현 목표-->
+                    <!--                        <ul class="comments">
+                                                <li class="clearfix">
+                                                    <img src="https://bootdey.com/img/Content/user_3.jpg" class="avatar" alt="">
+                                                    <div class="post-comments">
+                                                        <p class="meta">Dec 20, 2014 <a href="#">JohnDoe</a> says : <i class="pull-right"><a href="#"><small>Reply</small></a></i></p>
+                                                        <p>
+                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                            Etiam a sapien odio, sit amet
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                          </ul>
+                                        </li>-->
                 </ul>
             </div>
         </div>
     </div>
 </div>
-<div class="modal" id="myModal"tabindex="-1">
+<div class="modal" id="myModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -107,7 +109,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" onclick="btReplyInsert()" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                <button type="button" onclick="btReplyInsert()" class="btn btn-primary" data-bs-dismiss="modal">Save
+                </button>
             </div>
         </div>
     </div>
@@ -124,7 +127,7 @@
     let replyHtml = '';
     let replyPageHtml = '';
 
-    function btReplyInsert(){
+    function btReplyInsert() {
         $.ajax({
             url: "/reply/insert",
             type: "post",
@@ -155,9 +158,10 @@
     myModal.addEventListener('shown.bs.modal', function () {
         myInput.focus()
     })
-    function replyRead(page){
+
+    function replyRead(page) {
         $.ajax({
-            url: "../reply/read?page="+page,
+            url: "../reply/read?page=" + page,
             type: "GET",
             dataType: "json",
             data: {
@@ -184,8 +188,8 @@
 
         })
 
-        function replyHtmlF(data){
-            for(let i=0; i<data.content.length; i++) {
+        function replyHtmlF(data) {
+            for (let i = 0; i < data.content.length; i++) {
                 replyHtml = replyHtml + "<li class='clearfix'> " +
                     "<img src='./blank_profile.png' class='avatar'> " +
                     "<div class='post-comments'>" +
@@ -201,13 +205,13 @@
             }
             console.log(data.content[1]);
             $("#replys").html(replyHtml);
-            replyHtml="";
+            replyHtml = "";
         }
 
-        function replyPage(data){
+        function replyPage(data) {
             replyPageHtml = replyPageHtml + "<li class='page-item'><a class='page-link' href='/prev'>Prev</a></li>"
-            for(let i=0; i<data.totalPages; i++) {
-                replyPageHtml = replyPageHtml + "<li class='page-item'><button class='page-link' onclick='replyRead("+i+")'>" + (i+1) + "</button></li>";
+            for (let i = 0; i < data.totalPages; i++) {
+                replyPageHtml = replyPageHtml + "<li class='page-item'><button class='page-link' onclick='replyRead(" + i + ")'>" + (i + 1) + "</button></li>";
             }
             replyPageHtml = replyPageHtml + "<li class='page-item'><a class='page-link' href='./next'>Next</a></li>"
 
@@ -223,8 +227,8 @@
 
     });
 
-    function DataFormat(data){
-        let yyyy = data.substring(0,10);
+    function DataFormat(data) {
+        let yyyy = data.substring(0, 10);
         return yyyy;
     };
 

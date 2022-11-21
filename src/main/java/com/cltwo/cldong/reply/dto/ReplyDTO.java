@@ -27,7 +27,7 @@ public class ReplyDTO {
     private String content;
 
 
-    public Reply toEntity(){
+    public Reply toEntity() {
         Reply reply = Reply.builder()
                 .rid(rid)
                 .bid(bid)
